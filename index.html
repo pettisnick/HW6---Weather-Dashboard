@@ -4,34 +4,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+        href="https://api.openweathermap.org/data/2.5/forecast?q={city name}&appid=9b3d72753ebf07832128632f512c6fe0">
+    <!-- Bootstrap Style Sheet -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <!-- Font Awesome Style Sheet -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- CSS Style Sheet -->
     <link rel="stylesheet" href="style.css">
     <title>Weather Dashboard</title>
 </head>
 
 <body>
-    <div class="jumbotron">
-        <h1 class="font-italic font-weight-bolder display-4">Weather Dashboard</h1>
-        <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-    </div>
+    <!-- Jumbotron -->
+    <header>
+        <div class="jumbotron jumbotron-fluid" id="jumbotron">
+            <div class="container">
+                <h1 class="font-italic font-weight-bolder display-4" id="wthrDashboard">Weather Dashboard</h1>
+            </div>
+        </div>
+    </header>
 
     <div class="container">
         <div class="row">
             <!-- City Search -->
             <div class="col-4 search-container">
-                <h3>Search for a City</h3>
-                <form action="/action_page.php">
-                    <input type="text" placeholder="City Name" name="search">
-                    <button type="submit"><i class="fa fa-search"></i></button>
+                <form action="/action_page.pShp">
+                    <label for="citySearch" id="label">Search for a City</label>
+                    <input type="text" id="citySearch" name="citySearch">
+                    <button class="submit" id="searchBtn"><i class="fa fa-search"></i></button>
                 </form>
             </div>
-            <!-- Weather Info -->
-            <div class="col-8">
-                <div class="card" id="curWeatherContainer"></div>
-                
-                <div id="5DayForecast"></div>
+            <!-- Search History -->
+            <div class="searchHistory">
+                <div class="card-body" id="cityStorage"></div>
             </div>
+            <!-- Current City and Future Forecast -->
+            <div class="col-8 forecast">
+                <div class="card" id="currentCity">
+                    <h5 class="card-title" id="city"></h5>
+                    <p id="temp"></p>
+                    <p id="humid"></p>
+                    <p id="wind"></p>
+                    <p id="uv"></p>
+                </div>
+            </div>
+
 
 
 
