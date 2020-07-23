@@ -23,41 +23,42 @@
         </div>
     </header>
 
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <!-- City Search -->
-            <div class="col-4 search-container">
+            <div class="col-lg-3 bg-light">
+                <h5>Search for a city:</h5>
+                <!-- Begin Input -->
                 <form>
                     <input type="text" id="citySearch">
-                    <button id="searchBtn"><i class="fa fa-search"></i></button>
+                    <button id="searchBtn" class="btn btn-primary"><i class="fa fa-search"></i></button>
                 </form>
             </div>
             <!-- Search History -->
             <div class="searchHistory">
                 <div class="card-body" id="cityStorage"></div>
             </div>
-            <!-- Current City and Future Forecast -->
-            <div class="col-8 forecast">
-                <div class="card" id="currentCity">
+            <!-- Current City Forecast -->
+            <div class="col-lg-9 forecast">
+                <div class="mt-4" id="currentCity">
                     <h5 class="card-title" id="city"></h5>
                     <p id="temp"></p>
                     <p id="humid"></p>
                     <p id="wind"></p>
-                    <p id="uv"></p>
+                    <p id="uv"></p> 
                 </div>
             </div>
         </div>
-        <div id="5DayForecast">
-            <div id="day1"></div>
-            <div id="day2"></div>
-            <div id="day3"></div>
-            <div id="day4"></div>
-            <div id="day5"></div>
+        <!-- 5 Day Forecast Container -->
+        <div class="mt-4 col-md-12">
+            <h6 id="5DayForecast" class="mt-3 hide">5-Day Forecast:</h6>
+            
+            <div id="forecast" class="row">
+
+            </div>
         </div>
     </div>
-
-
-
+           
 
 
 
