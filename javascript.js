@@ -16,9 +16,9 @@ var uv = $("#uv");
         event.preventDefault();
         var city = $("#citySearch").val();
 
-        //var cityHistory = localStorage.setItem("cityHistory");
+        var cityHistory = localStorage.setItem("cityHistory");
         
-        //document.getElementById("result").innerHTML = localStorage.getItem("citySearch");
+        document.getElementById("result").innerHTML = localStorage.getItem("citySearch");
 
         //Ajax function to get the current weather
         $.ajax({
