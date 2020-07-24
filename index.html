@@ -26,26 +26,26 @@
     <div class="container-fluid">
         <div class="row">
             <!-- City Search -->
-            <div class="col-lg-3 bg-light">
+            <div class="col-lg-3 leftCard">
                 <h5>Search for a city:</h5>
                 <!-- Begin Input -->
-                <form>
+                <div>
                     <input type="text" id="citySearch">
-                    <button id="searchBtn" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                </form>
+                    <button id="searchBtn" class="btn btn-primary" type="button"><i class="fa fa-search"></i></button>
+                </div>
             </div>
             <!-- Search History -->
             <div class="searchHistory">
                 <div class="card-body" id="cityStorage"></div>
             </div>
             <!-- Current City Forecast -->
-            <div class="col-lg-9 forecast">
+            <div class="col-lg-9 rightCard forecast">
                 <div class="mt-4" id="currentCity">
                     <h5 class="card-title" id="city"></h5>
                     <p id="temp"></p>
                     <p id="humid"></p>
                     <p id="wind"></p>
-                    <p id="uv"></p> 
+                    <p id="uvIndex"></p> 
                 </div>
             </div>
         </div>

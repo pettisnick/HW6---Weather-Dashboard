@@ -8,7 +8,7 @@ var temp = $("#temp");
 var humid = $("#humid");
 var Wind = $("#wind");
 var uv = $("#uv");
-var daily = $("#5DayForecast");
+var daily = $("#dailyForecast");
 
 var date = new Date();
 
@@ -32,11 +32,12 @@ var date = new Date();
             
             //Value from input
             citySearch = $("#citySearch").val();
+          
             
             //To clear input box
-            $("#citySearch").empty();
+            $("#citySearch").empty(daily);
         
-        console.log(api + citySearch + apiKey);
+            //console.log(api + citySearch + apiKey);
             //Ajax function to get the current weather
             $.ajax({
                 url: api + citySearch + apiKey,
@@ -46,13 +47,19 @@ var date = new Date();
             //then is a PROMISE, when data pull is done, pass the response through the function
             .then(function (response) {
                 //Log the resulting
-                console.log(response);
+                //console.log(response);
+                var history = JSON.parse(window.localStorage.getItem("history")) || [];
+                history.push(citySearch);
+                window.localStorage.setItem("history", JSON.stringify(history));
+                console.log(history);
+                $("")
      
                 //Transfer content to HTML
+                var searchHistory = $("<div>").addClass("searchHistory");
                 $("#city").html("<h5>" + name + " </h5>");
                 $("#humid").text("Humidity: " + response.main.humidity);
                 $("#wind").text("Wind Speed: " + response.wind.speed);
-                $("#uv").text("UV Index: " + response.main.uv);
+                $("#uvIndex").text("UV Index: " + response.main.uv);
                 
                 //Convert the temp to fahrenheit
                 var tempF = (response.main.temp - 273.15) * 1.80 + 32;
@@ -67,7 +74,7 @@ var date = new Date();
                 console.log("Temperature (F) " + tempF);
 
                 //Add content to page
-                citySearch.append()
+                $("#citySearch").append();
             });
 
          
@@ -78,9 +85,80 @@ var date = new Date();
             method: "GET"
         })
         .then(function (response) {
-            console.log(response);
+            //console.log(response);
+            $("#forecast").empty();
 
-            var i = 1;
+            var results = response.list;
+            console.log(results);
+
+            $("#day1").text(moment().add(1, "day").format("L"));
+            $("#icon1").attr("src", "https://openweathermap.org/img/wn/" + response.list[4].weather[0].icon + "@2x.png");
+            var tempF1 = (response.list[4].main.temp - 273.15) * 1.80 + 32;
+            $("#temp1").text("Temp: " + tempF1.toFixed(2) + " &8457");
+            $("#humidity1").text("Humidity: " + response.list[4].main.humidity + "%");
+           
+            $("#day2").text(moment().add(2, "day").format("L"));
+            $("#icon2").attr("src", "https://openweathermap.org/img/wn/" + response.list[12].weather[0].icon + "@2x.png");
+            var tempF1 = (response.list[12].main.temp - 273.15) * 1.80 + 32;
+            $("#temp2").text("Temp: " + tempF1.toFixed(2) + " &8457");
+            $("#humidity2").text("Humidity: " + response.list[12].main.humidity + "%");
+
+            $("#day3").text(moment().add(3, "day").format("L"));
+            $("#icon3").attr("src", "https://openweathermap.org/img/wn/" + response.list[20].weather[0].icon + "@2x.png");
+            var tempF1 = (response.list[20].main.temp - 273.15) * 1.80 + 32;
+            $("#temp3").text("Temp: " + tempF1.toFixed(2) + " &8457");
+            $("#humidity3").text("Humidity: " + response.list[4].main.humidity + "%");
+
+            $("#day4").text(moment().add(4, "day").format("L"));
+            $("#icon4").attr("src", "https://openweathermap.org/img/wn/" + response.list[28].weather[0].icon + "@2x.png");
+            var tempF1 = (response.list[28].main.temp - 273.15) * 1.80 + 32;
+            $("#temp4").text("Temp: " + tempF1.toFixed(2) + " &8457");
+            $("#humidity4").text("Humidity: " + response.list[28].main.humidity + "%");
+
+            $("#day5").text(moment().add(5, "day").format("L"));
+            $("#icon5").attr("src", "https://openweathermap.org/img/wn/" + response.list[36].weather[0].icon + "@2x.png");
+            var tempF1 = (response.list[36].main.temp - 273.15) * 1.80 + 32;
+            $("#temp5").text("Temp: " + tempF1.toFixed(2) + " &8457");
+            $("#humidity5").text("Humidity: " + response.list[4].main.humidity + "%");
+           
+            $.ajax({
+            url: api + citySearch + apiKey,
+            method: "GET"
+        })
+        .then(function (response) {
+            //console.log(response);
+            var uvIndex = response[0].value;
+            if (uvIndex <= 3) {
+                var uvIndexSpan = $("<span>").attr("id", "uvIndexLow").addClass("box").html(uvIndex);
+                $("#uvIndex").html("Current UV Index: ").append(uvIndexSpan);
+            }
+            else if (uvIndex > 3 && unIndex <= 6) {
+                var uvIndexSpan = $("<span>").attr("id", "uvIndexModerate").addClass("box").html(uvIndex);
+                $("#uvIndex").html("Current UV Index: ").append(uvIndexSpan);
+            }
+            else if (uvIndex > 6 && unIndex <= 8) {
+                var uvIndexSpan = $("<span>").attr("id", "uvIndexHigh").addClass("box").html(uvIndex);
+                $("#uvIndex").html("Current UV Index: ").append(uvIndexSpan);
+            }
+            else if (uvIndex > 8 && unIndex <= 10) {
+                var uvIndexSpan = $("<span>").attr("id", "uvIndexVeryHigh").addClass("box").html(uvIndex);
+                $("#uvIndex").html("Current UV Index: ").append(uvIndexSpan); 
+            }
+            else if (uvIndex > 10) {
+                var uvIndexSpan = $("<span>").attr("id", "uvIndexExtreme").addClass("box").html(uvIndex);
+                $("#uvIndex").html("Current UV Index: ").append(uvIndexSpan);
+            }
+            console.log(uvIndex);
+            console.log(uvIndexSpan);
+
+            var results = response.list;
+            console.log(results);
+           })
+
+           })
+
+
+            /* var i = 1;
 
             for (var r = 0; r < response.list.length; r++) {
                 console.log("loop, round " + r)
@@ -90,25 +168,32 @@ var date = new Date();
                     console.log(r);
 
                     $("<h6>").html(moment().add(i + 1, "days").format("M" + "/" + "D" + "/" + "YYYY")).appendTo("#day" + i);
+                    
+                    //Convert the temp to fahrenheit
+                   var tempF = (response.main.temp - 273.15) * 1.80 + 32;
+                    //Add temp content to HTML
+                    $("#temp").text("Temperature (K) " + response.main.temp);
+                    $("#tempF").text("Temperature (F) " + tempF.toFixed(2));
 
-                    weatherImg = 'https://openweathermap.org/img/wn/' + response.list[r].weather[0].icon + '@2x.png'
+                   weatherImg = 'https://openweathermap.org/img/wn/' + response.list[r].weather[0].icon + '@2x.png'
                     var forecastImg = $("#<img>").attr("src", weatherImg);
 
                     var forecastTemp = $("<p>").html("Temp: " + parseFloat(response.list[r].main.temp).toFixed(2) + "<span>&deg</span> F");
 
+
                     var forecastHumid = $("<p>").html("Humidty " + parseInt(response.list[r].main.humidity) + "%");
 
-                    // $("#day" + i).append(forecastImg, forecastTemp, forecastHumid);
+                    $("#day" + i).append(forecastImg, forecastTemp, forecastHumid);
+                   // card.append($("#day"));
                     $("#day" + i).append("Testing!");
 
-                    i++;
-                }
+                    i++; */
+                })
 
                 
-            }
-            
+                   
 
-        })
+        
     
 
     function renderBtns() {
@@ -117,10 +202,4 @@ var date = new Date();
             var newCityBtn = $("<button>").addClass("cities").text(searchHistory[i]).appendTo(newCityBtn);
             $("#cityStorage").prepend(newCityBtn);
         }
-    }
-
-    
-
-
-
-});
+    };
