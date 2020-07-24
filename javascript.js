@@ -1,4 +1,4 @@
-var api = "https://api.openweathermap.org/data/2.5/forecast?q=";
+var api = "https://api.openweathermap.org/data/2.5/weather?q=";
 var apiKey = "&appid=9b3d72753ebf07832128632f512c6fe0";
 
 
@@ -36,10 +36,11 @@ var date = new Date();
             //To clear input box
             $("#citySearch").empty();
         
-        
+        console.log(api + citySearch + apiKey);
             //Ajax function to get the current weather
             $.ajax({
-                url: api + city + apiKey,
+                url: api + citySearch + apiKey,
+            
                 method: "GET"
             })
             //then is a PROMISE, when data pull is done, pass the response through the function
@@ -70,23 +71,25 @@ var date = new Date();
             });
 
          
+            api = "https://api.openweathermap.org/data/2.5/forecast?q=";
 
             $.ajax({
-            url: api + city + apiKey,
+            url: api + citySearch + apiKey,
             method: "GET"
-        }).then(function (response) {
-            console.log(response.list.length);
+        })
+        .then(function (response) {
+            console.log(response);
 
-            var i = 0;
+            var i = 1;
 
-            for (var r = 0; r <= response.list.length; r++) {
-
+            for (var r = 0; r < response.list.length; r++) {
+                console.log("loop, round " + r)
                 if (response.list[r].dt_txt.includes("12:00:00")) {
-
+                    console.log("loop?");
                     console.log(i);
                     console.log(r);
 
-                    $("<h6>").html(moment().add(i + 1, "days").format("M" + "/" + "D" + "/" + "YYYY")).appendTO("#day" + i);
+                    $("<h6>").html(moment().add(i + 1, "days").format("M" + "/" + "D" + "/" + "YYYY")).appendTo("#day" + i);
 
                     weatherImg = 'https://openweathermap.org/img/wn/' + response.list[r].weather[0].icon + '@2x.png'
                     var forecastImg = $("#<img>").attr("src", weatherImg);
@@ -95,9 +98,10 @@ var date = new Date();
 
                     var forecastHumid = $("<p>").html("Humidty " + parseInt(response.list[r].main.humidity) + "%");
 
-                    $("#day" + i).append(forecastImg, forecastTemp, forecastHumid);
+                    // $("#day" + i).append(forecastImg, forecastTemp, forecastHumid);
+                    $("#day" + i).append("Testing!");
 
-                    i++
+                    i++;
                 }
 
                 
