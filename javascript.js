@@ -13,18 +13,29 @@ var daily = $("#dailyForecast");
 var date = new Date();
 
 
- /*$( document ).ready(function() {
-    submit.click(function(event) {
-        //Gives value from what the user inputs
-        */
-       
-     /*  $("#citySearch").on("click", function(event) {
-               event.preventDefault();
-               $("#searchBtn").click();
-       */ 
+ $( document ).ready(function() {
             
-        
+      //what I'm getting from local storage under the ID of 'history'
+      var history = JSON.parse(window.localStorage.getItem("history")) || [];  
+     
+      for (var i = 0; i < history.length; i++) {
+        console.log(history[i]);
+        $("#cityStorage").append('<button class="saveCity">' + history[i] + '</button>');
+    }
 
+    $(".saveCity").on("click", function() {
+        //only occurs when clicked
+        event.preventDefault();
+        console.log($(this));
+        console.log($(this)[0].innerText);
+    })
+});  
+
+        $(".saveCity").on("click", function() {
+            //only occurs when clicked
+            event.preventDefault();
+            console.log($(this));
+        })
         
         $("#searchBtn").on("click", function() {
             event.preventDefault();
@@ -48,11 +59,18 @@ var date = new Date();
             .then(function (response) {
                 //Log the resulting
                 //console.log(response);
+                
+                //what I'm getting from local storage under the ID of 'history'
                 var history = JSON.parse(window.localStorage.getItem("history")) || [];
+                //adding citySearch to the 'history' array
                 history.push(citySearch);
+                //goin to localStorage hsitory and overwriting the array that was there witha a new one
+                //now the new city is being added to the array that's in localstorage
                 window.localStorage.setItem("history", JSON.stringify(history));
                 console.log(history);
-                $("")
+
+                
+                
      
                 //Transfer content to HTML
                 var searchHistory = $("<div>").addClass("searchHistory");
@@ -86,40 +104,41 @@ var date = new Date();
         })
         .then(function (response) {
             //console.log(response);
-            $("#forecast").empty();
+            
 
             var results = response.list;
             console.log(results);
 
-            $("#day1").text(moment().add(1, "day").format("L"));
-            $("#icon1").attr("src", "https://openweathermap.org/img/wn/" + response.list[4].weather[0].icon + "@2x.png");
-            var tempF1 = (response.list[4].main.temp - 273.15) * 1.80 + 32;
+            $("#Day1").text(moment().add(1, "day").format("L"));
+            
+            $("#icon1").attr("src", "https://openweathermap.org/img/wn/" + response.list[6].weather[0].icon + "@2x.png");
+            var tempF1 = (response.list[6].main.temp - 273.15) * 1.80 + 32;
             $("#temp1").text("Temp: " + tempF1.toFixed(2) + " &8457");
-            $("#humidity1").text("Humidity: " + response.list[4].main.humidity + "%");
+            $("#humidity1").text("Humidity: " + response.list[6].main.humidity + "%");
            
-            $("#day2").text(moment().add(2, "day").format("L"));
-            $("#icon2").attr("src", "https://openweathermap.org/img/wn/" + response.list[12].weather[0].icon + "@2x.png");
-            var tempF1 = (response.list[12].main.temp - 273.15) * 1.80 + 32;
+            $("#Day2").text(moment().add(2, "day").format("L"));
+            $("#icon2").attr("src", "https://openweathermap.org/img/wn/" + response.list[14].weather[0].icon + "@2x.png");
+            var tempF1 = (response.list[14].main.temp - 273.15) * 1.80 + 32;
             $("#temp2").text("Temp: " + tempF1.toFixed(2) + " &8457");
-            $("#humidity2").text("Humidity: " + response.list[12].main.humidity + "%");
+            $("#humidity2").text("Humidity: " + response.list[14].main.humidity + "%");
 
-            $("#day3").text(moment().add(3, "day").format("L"));
-            $("#icon3").attr("src", "https://openweathermap.org/img/wn/" + response.list[20].weather[0].icon + "@2x.png");
-            var tempF1 = (response.list[20].main.temp - 273.15) * 1.80 + 32;
+            $("#Day3").text(moment().add(3, "day").format("L"));
+            $("#icon3").attr("src", "https://openweathermap.org/img/wn/" + response.list[22].weather[0].icon + "@2x.png");
+            var tempF1 = (response.list[22].main.temp - 273.15) * 1.80 + 32;
             $("#temp3").text("Temp: " + tempF1.toFixed(2) + " &8457");
-            $("#humidity3").text("Humidity: " + response.list[4].main.humidity + "%");
+            $("#humidity3").text("Humidity: " + response.list[22].main.humidity + "%");
 
-            $("#day4").text(moment().add(4, "day").format("L"));
-            $("#icon4").attr("src", "https://openweathermap.org/img/wn/" + response.list[28].weather[0].icon + "@2x.png");
-            var tempF1 = (response.list[28].main.temp - 273.15) * 1.80 + 32;
+            $("#Day4").text(moment().add(4, "day").format("L"));
+            $("#icon4").attr("src", "https://openweathermap.org/img/wn/" + response.list[30].weather[0].icon + "@2x.png");
+            var tempF1 = (response.list[30].main.temp - 273.15) * 1.80 + 32;
             $("#temp4").text("Temp: " + tempF1.toFixed(2) + " &8457");
-            $("#humidity4").text("Humidity: " + response.list[28].main.humidity + "%");
+            $("#humidity4").text("Humidity: " + response.list[30].main.humidity + "%");
 
-            $("#day5").text(moment().add(5, "day").format("L"));
-            $("#icon5").attr("src", "https://openweathermap.org/img/wn/" + response.list[36].weather[0].icon + "@2x.png");
-            var tempF1 = (response.list[36].main.temp - 273.15) * 1.80 + 32;
+            $("#Day5").text(moment().add(5, "day").format("L"));
+            $("#icon5").attr("src", "https://openweathermap.org/img/wn/" + response.list[38].weather[0].icon + "@2x.png");
+            var tempF1 = (response.list[38].main.temp - 273.15) * 1.80 + 32;
             $("#temp5").text("Temp: " + tempF1.toFixed(2) + " &8457");
-            $("#humidity5").text("Humidity: " + response.list[4].main.humidity + "%");
+            $("#humidity5").text("Humidity: " + response.list[38].main.humidity + "%");
            
             $.ajax({
             url: api + citySearch + apiKey,
